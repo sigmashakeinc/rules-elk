@@ -6,7 +6,7 @@ rule elk-block-unsafe-patterns {
   priority 90
   severity error
   DENY write
-  IF path GLOB "**/*" AND content CONTAINS "UNSAFE_elk_PATTERN"
+  IF path GLOB "**/*" AND content CONTAINS "script.inline: true"
   MESSAGE "Blocked an unsafe pattern in elk. Use the recommended best practices for 2025/2026."
 }
 
@@ -14,7 +14,7 @@ rule elk-force-updated-api {
   enabled true
   priority 80
   severity warning
-  ASK write
-  IF path GLOB "**/*" AND content CONTAINS "OLD_elk_API"
+  LOG write
+  IF path GLOB "**/*" AND content CONTAINS "elasticsearch-transport"
   MESSAGE "You are using an outdated API for elk. Please upgrade to the newer API."
 }
